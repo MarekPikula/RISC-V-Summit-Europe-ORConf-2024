@@ -11,7 +11,9 @@ Summit Europe 2024*:
 
 - [GitHub repository with all resources][1]
 - [Extended abstract][2] ([PDF version][3])
+- [Poster (PDF)][4]
 
 [1]: https://github.com/MarekPikula/RISC-V-Summit-Europe-2024
 [2]: abstract/index.html
 [3]: abstract/abstract.pdf
+[4]: poster/poster.pdf
