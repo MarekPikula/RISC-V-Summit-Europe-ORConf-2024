@@ -1,0 +1,221 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Journal Article
+% LaTeX Template
+% Version 2.1 (Jan 18, 2024)
+%
+% This template originates from:
+% https://www.LaTeXTemplates.com
+%
+% Author:
+% Vel (vel@latextemplates.com)
+%
+% License:
+% CC BY-NC-SA 4.0 (https://creativecommons.org/licenses/by-nc-sa/4.0/)
+%
+% NOTE: The bibliography needs to be compiled using the biber engine.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[
+	a4paper, % Paper size, use either a4paper or letterpaper
+	10pt, % Default font size, can also use 11pt or 12pt, although this is not recommended
+	unnumberedsections, % Comment to enable section numbering
+	twoside, % Two side traditional mode where headers and footers change between odd and even pages, comment this option to make them fixed
+]{LTJournalArticle}
+
+\addbibresource{bibliography.bib} % BibLaTeX bibliography file
+\renewcommand*{\bibfont}{\footnotesize}
+
+\runninghead{} % A shortened article title to appear in the running head, leave this command empty for no running head
+
+\footertext{\textit{RISC-V Summit Europe, Munich, 24-28th June 2024}} % Text to appear in the footer, leave this command empty for no footer text
+
+\setcounter{page}{1} % The page number of the first page, set this to a higher number if the article is to be part of an issue or larger work
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\title{Accelerating software development for emerging ISA extensions with cloud-based FPGAs: \\ RVV case study}
+% Article title, use manual lines breaks (\\) to beautify the layout
+
+% Authors are listed in a comma-separated list with superscript numbers indicating affiliations
+% \thanks{} is used for any text that should be placed in a footnote on the first page, such as the corresponding author's email, journal acceptance dates, a copyright/license notice, keywords, etc
+\author{%
+	Marek Pikuła\textsuperscript{1}, Marek Szyprowski\textsuperscript{1}
+}
+
+% Affiliations are output in the \date{} command
+\date{\footnotesize\textsuperscript{\textbf{1}}Samsung R\&D Institute Poland}
+
+% Full-width abstract
+\renewcommand{\maketitlehookd}{%
+	\begin{abstract}
+		\noindent The RISC-V Vector Extension (RVV) promises an enhanced performance
+    and power efficiency across various complex computational tasks. However,
+    the efficient utilization of RVV demands careful consideration of the
+    optimization approach. This article examines strategies for accelerating
+    this process. Key challenges include assessing performance differences among
+    algorithmic approaches and overcoming initial hardware constraints. FireSim
+    provides a comprehensive solution by offering advanced software and hardware
+    simulation capabilities. Utilizing FireSim, we started the process of
+    enhancing source code with RVV instructions (called vectorization) for the
+    pixman project. Our experience outlines the efficacy of a cloud-based FPGA
+    simulation in expediting software development for emerging ISA extensions.
+    Overall, FireSim facilitates faster iteration cycles and informed design
+    decisions, benefiting individual developers and fostering collaboration in
+    remote teams.
+	\end{abstract}
+}
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle % Output the title section
+
+%----------------------------------------------------------------------------------------
+%	ARTICLE CONTENTS
+%----------------------------------------------------------------------------------------
+
+\section{Introduction}
+
+RISC-V Vector Extension (RVV) is making its way towards mainstream use. It opens
+up exciting avenues for software vectorization on RISC-V, promising improved
+performance and power efficiency across various computational tasks ranging from
+image processing to AI workloads. However, realizing its full potential demands
+careful evaluation and optimization of software implementations. This article
+delves into the nuances of accelerating software development for new ISA
+extensions, with a spotlight on the RVV extension.
+
+\subsection{Approaches to Vectorization}
+
+One of the key challenges in the software RVV vectorization is assessing the
+performance difference between different algorithmic approaches. Since the
+ratification in 2021, RVV support has gradually come to the upstream toolchains.
+Although the development progress of auto-vectorizers in both GCC and LLVM is
+promising, some use cases will always require a manual approach. Unfortunately,
+not many reliable sources give a “golden standard” guide to follow. Two notable
+exceptions are RVVRadar\autocite{KSG:2022} and RVV benchmark from Camel
+Coder\autocite{CC:2024}, but both require physical hardware or manual
+performance calculations.
+
+\subsection{Initial Hardware Constraints}
+
+At the outset of any project involving emerging ISA extensions like RVV, there
+is often a lack of readily available hardware for testing and validation. While
+tools like QEMU provide means to check the validity of the algorithms, they may
+not accurately reflect performance characteristics. When comparing scalar and
+RVV implementations of the same algorithm, the recently released QEMU~8.2
+performs worse on the latter. This can lead to suboptimal design choices based
+on incomplete or inaccurate performance assessments.
+
+\subsection{Role of Simulation Tools}
+
+Simulation tools play a crucial role in software development for emerging ISA
+extensions. While the Spike ISA simulator offers robust tracing and debugging
+functionality, it lacks in the area of microarchitectural considerations, which
+are particularly important for such a large and complex ISA extension like RVV.
+
+Software HDL simulation tools provide detailed profiling capabilities but suffer
+from slow performance, especially for complex designs. Classical FPGA
+prototyping offers a middle ground but comes with high initial costs and limited
+tracing capabilities.
+
+\section{FireSim Simulation}
+
+To address these challenges, FireSim\autocite{ISCA-50} offers a comprehensive
+solution. FireSim extends the ChipYard\autocite{chipyard} project with advanced
+software and hardware simulation capabilities, making it an ideal platform for
+developing and testing RISC-V core implementations, along with external or
+internal specialized accelerators.
+
+\subsection{Key Features}
+
+FireSim provides several key features tailored to software development for
+emerging ISA extensions:
+
+\begin{itemize}
+  \item Ready-to-use processor and accelerator cores with pre-built
+        \emph{FireMarshal} Linux environment.
+  \item \emph{TracerV}: %\autocite{FirePerf}
+        In-hardware tracing with out-of-band Flame Graph visualization.
+  \item Support for automatic ILA insertion, assertion synthesis, and
+        out-of-band performance counters.
+  \item Multicore and multi-SoC setups (so-called \emph{supernode} simulation)
+        with on-chip network connected to the host for complex workload
+        scenarios.
+\end{itemize}
+
+\subsection{Cloud Deployment}
+
+One of the notable advantages of FireSim is its support for cloud deployment,
+specifically on AWS EC2~F1 instances with Xilinx UltraScale+ VU9P FPGA cards.
+This approach offers a low entry barrier on both technical and financial levels,
+allowing teams to provision FPGA resources quickly and pay only for the compute
+time used. It also significantly decreases the risk of the entire operation.
+There is no need to buy expensive FPGA hardware or license Vivado, as everything
+comes in a pay-by-hour manner, which is especially important for
+software-focused teams.
+
+This approach might also appeal to multidisciplinary, remote teams. For example,
+the hardware team can develop an SoC on local hardware they already have on-site
+(FireSim also supports local targets) and immediately pass the work to a remote
+software team. Overall, this can dramatically increase the speed of evaluation
+and integration and allow for more dynamic, end-to-end product development.
+
+\section{RVV Case Study}
+
+We utilized FireSim to develop and optimize the RVV port for the
+\emph{pixman}\footnote{\url{https://gitlab.freedesktop.org/pixman/pixman}}
+project. First, we evaluated readily available RVV-capable cores. We started
+with the \emph{Tenstorrent Ocelot}\autocite{ocelot} project (a RISCV-BOOM core
+with integrated RVV accelerator), which already had ChipYard integration.
+Unfortunately, the implementation was not directly synthesizable in the FireSim
+setting. The second choice was \emph{PULP Ara}\autocite{Ara2020}, a coprocessor
+for the CORE-V CVA6 core. We smoothly adapted the existing ChipYard CVA6 wrapper
+and successfully built and simulated the SoC on AWS node, running a provided
+Fedora image by following the comprehensive and, importantly, complete
+documentation of the aforementioned projects, even though we had no prior
+experience with AWS tools.
+
+\subsection{Development Process}
+
+In the initial phase of the pixman vectorization, we focused on the correctness
+of the approach and not on performance. For this we used QEMU environment,
+because, even with its suboptimal RVV implementation, it greatly outperforms any
+other emulation solution. Another important benefit is the possibility of
+working on a local machine without the need to provision AWS resources.
+
+Once we worked out the general solution, we started profiling the code in the
+FireSim environment. This way, we could reliably compare between different
+optimizations and with the base scalar implementation. To do this, we used
+detailed TracerV reports along with performance counter measurements. We also
+experimented with different microarchitectural configurations to see the
+implications for overall performance, which allowed us to make informed
+decisions regarding algorithmic approaches --  optimal in both low- and high-end
+configurations.
+
+\section{Conclusions}
+
+Our experience with FireSim demonstrates the potential of the cloud-based FPGA
+simulation for accelerating software development for emerging ISA extensions
+like RVV. By providing access to cost-effective, scalable hardware resources and
+comprehensive simulation capabilities, FireSim enables faster iteration cycles
+and more informed design decisions. This approach not only benefits individual
+developers but also facilitates collaboration in remote teams, bridging the gap
+between hardware and software development efforts.
+
+%----------------------------------------------------------------------------------------
+%	 REFERENCES
+%----------------------------------------------------------------------------------------
+
+\printbibliography % Output the bibliography
+
+%----------------------------------------------------------------------------------------
+
+\end{document}

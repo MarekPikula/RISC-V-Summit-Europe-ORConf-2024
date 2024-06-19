@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang='en-US' xml:lang='en-US'>
+  <head><title>Accelerating software development for emerging ISA
+    extensions with cloud-based FPGAs:
+    RVV case study</title>
+    <meta charset='utf-8' />
+    <meta content='TeX4ht (https://tug.org/tex4ht/)' name='generator' />
+    <meta content='width=device-width,initial-scale=1' name='viewport' />
+    <link href='abstract.css' rel='stylesheet' type='text/css' />
+    <meta content='abstract.tex' name='src' />
+    <script>window.MathJax = { tex: { tags: "ams", }, }; </script>
+    <script async='async' id='MathJax-script' src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js' type='text/javascript'></script>
+  </head><body>
+    <div class='maketitle'>
+
+
+
+
+      <h2 class='titleHead'>Accelerating software development for emerging
+        ISA extensions with cloud-based FPGAs:<br />
+        RVV case study</h2>
+      <div class='author'><span class='ecrm-1200'>Marek Pikuła</span><sup class='textsuperscript'><span class='ecrm-0900'>1</span></sup><span class='ecrm-1200'>, Marek Szyprowski</span><sup class='textsuperscript'><span class='ecrm-0900'>1</span></sup> </div><br />
+      <div class='date'><sup class='textsuperscript'><span class='ecbx-0900'>1</span></sup><span class='ecrm-0800'>Samsung R&amp;D Institute Poland</span></div>
+      <section class='abstract' role='doc-abstract'>
+        <h3 class='abstracttitle'><span class='ecbx-1000'>Abstract</span></h3>
+        <span class='ecti-0900'>The RISC-V Vector Extension (RVV) promises an enhanced performance and power efficiency across various
+          complex computational tasks. However, the efficient utilization of RVV demands careful consideration of the
+          optimization approach. This article examines strategies for accelerating this process. Key challenges include
+          assessing performance differences among algorithmic approaches and overcoming initial hardware constraints.
+          FireSim provides a comprehensive solution by offering advanced software and hardware simulation capabilities.
+          Utilizing FireSim, we started the process of enhancing source code with RVV instructions (called vectorization)
+          for the pixman project. Our experience outlines the efficacy of a cloud-based FPGA simulation in expediting
+          software development for emerging ISA extensions. Overall, FireSim facilitates faster iteration cycles and
+          informed design decisions, benefiting individual developers and fostering collaboration in remote teams.</span>
+      </section>
+    </div>
+    <h3 class='sectionHead' id='introduction'><a id='x1-1000'></a>Introduction</h3>
+<!-- l. 87 --><p class='noindent'>RISC-V Vector Extension (RVV) is making its way
+      towards mainstream use. It opens up exciting avenues
+      for software vectorization on RISC-V, promising
+      improved performance and power efficiency across
+      various computational tasks ranging from image
+      processing to AI workloads. However, realizing its full
+      potential demands careful evaluation and optimization of
+      software implementations. This article delves into the
+      nuances of accelerating software development for
+      new ISA extensions, with a spotlight on the RVV
+      extension.
+    </p><!-- l. 95 --><p class='noindent'>
+    </p>
+    <h4 class='subsectionHead' id='approaches-to-vectorization'><a id='x1-2000'></a>Approaches to Vectorization</h4>
+<!-- l. 97 --><p class='noindent'>One of the key challenges in the software RVV
+      vectorization is assessing the performance difference
+      between different algorithmic approaches. Since the
+      ratification in 2021, RVV support has gradually come to the upstream toolchains. Although the development
+      progress of auto-vectorizers in both GCC and LLVM is
+      promising, some use cases will always require a manual
+      approach. Unfortunately, not many reliable sources give
+      a “golden standard” guide to follow. Two notable
+      exceptions are RVVRadar[<a id='x1-2001'></a><a href='#cite.0_KSG_2022'>1</a>] and RVV benchmark from
+      Camel Coder[<a id='x1-2002'></a><a href='#cite.0_CC_2024'>2</a>], but both require physical hardware or
+      manual performance calculations.
+    </p><!-- l. 107 --><p class='noindent'>
+    </p>
+    <h4 class='subsectionHead' id='initial-hardware-constraints'><a id='x1-3000'></a>Initial Hardware Constraints</h4>
+  <!-- l. 109 --><p class='noindent'>At the outset of any project involving emerging ISA
+      extensions like RVV, there is often a lack of readily
+      available hardware for testing and validation. While
+      tools like QEMU provide means to check the validity
+      of the algorithms, they may not accurately reflect
+      performance characteristics. When comparing scalar
+      and RVV implementations of the same algorithm,
+      the recently released QEMU 8.2 performs worse
+      on the latter. This can lead to suboptimal design
+      choices based on incomplete or inaccurate performance
+      assessments.
+
+
+    </p><!-- l. 117 --><p class='noindent'>
+    </p>
+    <h4 class='subsectionHead' id='role-of-simulation-tools'><a id='x1-4000'></a>Role of Simulation Tools</h4>
+<!-- l. 119 --><p class='noindent'>Simulation tools play a crucial role in software
+      development for emerging ISA extensions. While the
+      Spike ISA simulator offers robust tracing and debugging
+      functionality, it lacks in the area of microarchitectural
+      considerations, which are particularly important for such
+      a large and complex ISA extension like RVV.
+    </p><!-- l. 124 --><p class='indent'>  Software HDL simulation tools provide detailed profiling
+      capabilities but suffer from slow performance, especially
+      for complex designs. Classical FPGA prototyping offers a
+      middle ground but comes with high initial costs and
+      limited tracing capabilities.
+    </p><!-- l. 129 --><p class='noindent'>
+    </p>
+    <h3 class='sectionHead' id='firesim-simulation'><a id='x1-5000'></a>FireSim Simulation</h3>
+<!-- l. 131 --><p class='noindent'>To address these challenges, FireSim[<a id='x1-5001'></a><a href='#cite.0_ISCA-50'>3</a>] offers a
+      comprehensive solution. FireSim extends the ChipYard[<a id='x1-5002'></a><a href='#cite.0_chipyard'>4</a>]
+      project with advanced software and hardware simulation
+      capabilities, making it an ideal platform for developing
+      and testing RISC-V core implementations, along with
+      external or internal specialized accelerators.
+    </p><!-- l. 137 --><p class='noindent'>
+    </p>
+    <h4 class='subsectionHead' id='key-features'><a id='x1-6000'></a>Key Features</h4>
+<!-- l. 139 --><p class='noindent'>FireSim provides several key features tailored to software
+      development for emerging ISA extensions:
+    </p>
+    <ul class='itemize1'>
+      <li class='itemize'>Ready-to-use  processor  and  accelerator  cores
+        with pre-built <span class='ecti-1000'>FireMarshal </span>Linux environment.
+      </li>
+      <li class='itemize'><span class='ecti-1000'>TracerV </span>: In-hardware tracing with out-of-band
+        Flame Graph visualization.
+      </li>
+      <li class='itemize'>Support for automatic ILA insertion, assertion
+        synthesis, and out-of-band performance counters.
+      </li>
+      <li class='itemize'>Multicore   and   multi-SoC   setups   (so-called
+        <span class='ecti-1000'>supernode   </span>simulation)  with  on-chip  network
+        connected  to  the  host  for  complex  workload
+        scenarios.</li></ul>
+                                                 <!-- l. 154 --><p class='noindent'>
+    </p>
+    <h4 class='subsectionHead' id='cloud-deployment'><a id='x1-7000'></a>Cloud Deployment</h4>
+   <!-- l. 156 --><p class='noindent'>One of the notable advantages of FireSim is its support
+      for cloud deployment, specifically on AWS EC2 F1
+      instances with Xilinx UltraScale+ VU9P FPGA cards.
+      This approach offers a low entry barrier on both
+      technical and financial levels, allowing teams to provision
+      FPGA resources quickly and pay only for the compute
+      time used. It also significantly decreases the risk of the
+      entire operation. There is no need to buy expensive
+      FPGA hardware or license Vivado, as everything comes
+      in a pay-by-hour manner, which is especially important
+      for software-focused teams.
+    </p><!-- l. 165 --><p class='indent'>   This approach might also appeal to multidisciplinary,
+      remote teams. For example, the hardware team can
+      develop an SoC on local hardware they already have
+      on-site (FireSim also supports local targets) and
+      immediately pass the work to a remote software team.
+      Overall, this can dramatically increase the speed of
+      evaluation and integration and allow for more dynamic,
+      end-to-end product development.
+    </p><!-- l. 171 --><p class='noindent'>
+    </p>
+    <h3 class='sectionHead' id='rvv-case-study'><a id='x1-8000'></a>RVV Case Study</h3>
+   <!-- l. 173 --><p class='noindent'>We utilized FireSim to develop and optimize the RVV port for the
+      <span class='ecti-1000'>pixman</span><span class='footnote-mark'><a href='abstract2.html#fn1x0'><sup class='textsuperscript'>1</sup></a></span><a id='x1-8001f1'></a>
+      project. First, we evaluated readily available RVV-capable
+      cores. We started with the <span class='ecti-1000'>Tenstorrent Ocelot</span>[<a id='x1-8003'></a><a href='#cite.0_ocelot'>5</a>] project
+      (a RISCV-BOOM core with integrated RVV accelerator),
+      which already had ChipYard integration. Unfortunately,
+      the implementation was not directly synthesizable in
+      the FireSim setting. The second choice was <span class='ecti-1000'>PULP
+        Ara</span>[<a id='x1-8004'></a><a href='#cite.0_Ara2020'>6</a>], a coprocessor for the CORE-V CVA6 core.
+      We smoothly adapted the existing ChipYard CVA6
+      wrapper and successfully built and simulated the SoC
+      on AWS node, running a provided Fedora image
+      by following the comprehensive and, importantly,
+      complete documentation of the aforementioned projects,
+      even though we had no prior experience with AWS
+      tools.
+    </p>
+    <h4 class='subsectionHead' id='development-process'><a id='x1-9000'></a>Development Process</h4>
+   <!-- l. 188 --><p class='noindent'>In the initial phase of the pixman vectorization, we
+      focused on the correctness of the approach and not on
+      performance. For this we used QEMU environment,
+      because, even with its suboptimal RVV implementation,
+
+
+      it greatly outperforms any other emulation solution.
+      Another important benefit is the possibility of working
+      on a local machine without the need to provision AWS
+      resources.
+    </p><!-- l. 194 --><p class='indent'>  Once we worked out the general solution, we started
+      profiling the code in the FireSim environment. This way, we
+      could reliably compare between different optimizations
+      and with the base scalar implementation. To do this, we
+      used detailed TracerV reports along with performance
+      counter measurements. We also experimented with
+      different microarchitectural configurations to see the
+      implications for overall performance, which allowed us
+      to make informed decisions regarding algorithmic
+      approaches – optimal in both low- and high-end
+      configurations.
+    </p><!-- l. 203 --><p class='noindent'>
+    </p>
+    <h3 class='sectionHead' id='conclusions'><a id='x1-10000'></a>Conclusions</h3>
+<!-- l. 205 --><p class='noindent'>Our experience with FireSim demonstrates the potential
+      of the cloud-based FPGA simulation for accelerating
+      software development for emerging ISA extensions like
+      RVV. By providing access to cost-effective, scalable
+      hardware resources and comprehensive simulation
+      capabilities, FireSim enables faster iteration cycles and
+      more informed design decisions. This approach not only
+      benefits individual developers but also facilitates
+      collaboration in remote teams, bridging the gap between
+      hardware and software development efforts.
+    </p><!-- l. 218 --><p class='noindent'>
+    </p>
+    <h3 class='sectionHead' id='references'><a id='x1-11000'></a>References</h3>
+<!-- l. 218 --><p class='noindent'>
+    </p><dl class='thebibliography'><dt class='thebibliography' id='X0-KSG_2022'>
+      <span class='ecrm-0800'>[1]</span>  </dt><dd class='thebibliography' id='bib-1'>
+    <!-- l. 218 --><p class='noindent'><a id='cite.0_KSG_2022'></a><span class='ecrm-0800'>Lucas       Klemmer,       Manfred       Schlaegl,       and
+          Daniel Große. “RVVRadar: A Framework for Supporting
+          the Programmer in Vectorization for RISC-V”. In: </span><span class='ecti-0800'>ACM
+            Great Lakes Symposium on VLSI</span><span class='ecrm-0800'>. 2022.</span>
+        </p></dd><dt class='thebibliography' id='X0-CC_2024'>
+          <span class='ecrm-0800'>[2]</span>  </dt><dd class='thebibliography' id='bib-2'>
+    <!-- l. 218 --><p class='noindent'><a id='cite.0_CC_2024'></a><span class='ecrm-0800'>Camel    Coder.    “Vectorizing    Unicode    conversions
+              on    real    RISC-V    hardware”.    In:    (2022).    </span><span class='eccc0800-'><span class='small-caps'>url</span></span><span class='ecrm-0800'>:</span>
+              <a class='url' href='https://camel-cdr.github.io/rvv-bench-results/articles/vector-utf.html'><span class='ectt-0800'>https://camel-cdr.github.io/rvv-bench-results/articles/vector-utf.html</span></a><span class='ecrm-0800'>.</span>
+            </p></dd><dt class='thebibliography' id='X0-ISCA-50'>
+              <span class='ecrm-0800'>[3]</span>  </dt><dd class='thebibliography' id='bib-3'>
+    <!-- l. 218 --><p class='noindent'><a id='cite.0_ISCA-50'></a><span class='ecrm-0800'>Sagar  Karandikar  et  al.  “FireSim:  FPGA-Accelerated
+                  Cycle-Exact Scale-Out System Simulation in the Public
+                  Cloud”.  In:  </span><span class='ecti-0800'>ISCA@50 Retrospective: 1996-2020</span><span class='ecrm-0800'>.  Ed.  by
+                    José F. Martínez and Lizy K. John. June 2023.</span>
+                </p></dd><dt class='thebibliography' id='X0-chipyard'>
+                  <span class='ecrm-0800'>[4]</span>  </dt><dd class='thebibliography' id='bib-4'>
+                                                        <!-- l. 218 --><p class='noindent'><a id='cite.0_chipyard'></a><span class='ecrm-0800'>Alon   Amid   et   al.   “Chipyard:   Integrated   Design,
+                      Simulation, and Implementation Framework for Custom
+                      SoCs”.  In:  </span><span class='ecti-0800'>IEEE  Micro  </span><span class='ecrm-0800'>40.4  (2020),  pp. 10–21.  </span><span class='eccc0800-'><span class='small-caps'>issn</span></span><span class='ecrm-0800'>:
+                        1937-4143. </span><span class='eccc0800-'><span class='small-caps'>doi</span></span><span class='ecrm-0800'>:  </span><a href='https://doi.org/10.1109/MM.2020.2996616'><span class='ecrm-0800'>10.1109/MM.2020.2996616</span></a><span class='ecrm-0800'>.</span>
+                    </p></dd><dt class='thebibliography' id='X0-ocelot'>
+                      <span class='ecrm-0800'>[5]</span>    </dt><dd class='thebibliography' id='bib-5'>
+          <!-- l. 218 --><p class='noindent'><a id='cite.0_ocelot'></a><span class='ecrm-0800'>Srikanth
+                          Arekapudi and Dongjie Xie. “Ocelot: Open Source Vector
+                          Unit”. In: </span><span class='ecti-0800'>RISC-V Summit North America 2022</span><span class='ecrm-0800'>. 2022.
+                          </span><span class='eccc0800-'><span class='small-caps'>url</span></span><span class='ecrm-0800'>: </span><a class='url' href='https://github.com/tenstorrent/riscv-ocelot/'><span class='ectt-0800'>https://github.com/tenstorrent/riscv-ocelot/</span></a><span class='ecrm-0800'>.</span>
+                        </p></dd><dt class='thebibliography' id='X0-Ara2020'>
+                          <span class='ecrm-0800'>[6]</span>    </dt><dd class='thebibliography' id='bib-6'>
+          <!-- l. 218 --><p class='noindent'><a id='cite.0_Ara2020'></a><span class='ecrm-0800'>Matheus Cavalcante et al. “Ara: A 1-GHz+ Scalable and
+                              Energy-Efficient        RISC-V        Vector        Processor
+                              With  Multiprecision  Floating-Point  Support  in  22-nm
+                              FD-SOI”.  In:  </span><span class='ecti-0800'>IEEE  Transactions  on  Very  Large  Scale
+                                Integration  (VLSI)  Systems  </span><span class='ecrm-0800'>28.2  (2020),  pp. 530–543.
+                                </span><span class='eccc0800-'><span class='small-caps'>doi</span></span><span class='ecrm-0800'>:  </span><a href='https://doi.org/10.1109/TVLSI.2019.2950087'><span class='ecrm-0800'>10.1109/TVLSI.2019.2950087</span></a><span class='ecrm-0800'>.</span></p></dd></dl>
+
+  </body>
+</html>
