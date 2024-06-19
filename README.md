@@ -6,14 +6,30 @@
 
 ## Resources
 
-On this website you can find all resources for my poster submission for *RISC-V
-Summit Europe 2024*:
+On this website you can find all resources for my poster submission for *RISC-V Summit Europe 2024*:
 
-- [GitHub repository with all resources][1]
-- [Extended abstract][2] ([PDF version][3])
-- [Poster (PDF)][4]
+- [GitHub repository with all resources][here]
+- [Extended abstract][abstract] ([PDF version][abstract-pdf])
+- [Poster (PDF)][poster-pdf]
 
-[1]: https://github.com/MarekPikula/RISC-V-Summit-Europe-2024
-[2]: abstract/index.html
-[3]: abstract/abstract.pdf
-[4]: poster/poster.pdf
+[here]: https://github.com/MarekPikula/RISC-V-Summit-Europe-2024
+[abstract]: abstract/index.html
+[abstract-pdf]: abstract/abstract.pdf
+[poster-pdf]: poster/poster.pdf
+
+## Code
+
+The following repositories were modified in process of this project:
+
+- …
+
+> [!NOTE]
+> All repositories are available as submodules in `code` directory.
+
+## Benchmarks
+
+In order to assess performance of PULP Ara, [rvv-bench][rvv-bench-upstream] was used. Results are available [here][rvv-bench-results]. It uses a modified [rvv-bench][rvv-bench-mod] suite.
+
+[rvv-bench-upstream]: https://github.com/camel-cdr/rvv-bench
+[rvv-bench-results]: benchmarks/rvv-bench-results/pulp_ara/index.html
+[rvv-bench-mod]: https://github.com/MarekPikula/rvv-bench/tree/pulp-ara

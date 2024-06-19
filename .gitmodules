@@ -1,0 +1,6 @@
+[submodule "benchmarks/rvv-bench-results"]
+	path = benchmarks/rvv-bench-results
+	url = https://github.com/MarekPikula/rvv-bench-results
+[submodule "benchmarks/rvv-bench"]
+	path = benchmarks/rvv-bench
+	url = https://github.com/MarekPikula/rvv-bench
