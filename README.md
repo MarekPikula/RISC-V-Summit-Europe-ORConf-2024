@@ -21,10 +21,20 @@ On this website you can find all resources for my poster submission for *RISC-V 
 
 The following repositories were modified in process of this project:
 
-- …
+- [Chipyard][chipyard-repo]
+- [FireSim][firesim-repo]
+- [PULP Ara][ara-repo]
+- [PULP Ara Chipyard wrapper][ara-wrapper-repo]
+- [FireMarshal][firemarshal-repo]
+
+[chipyard-repo]: https://github.com/MarekPikula/chipyard/tree/ara-integration
+[firesim-repo]: https://github.com/MarekPikula/firesim/tree/ara-integration
+[ara-repo]: https://github.com/MarekPikula/pulp-ara/tree/chipyard-integration
+[ara-wrapper-repo]: https://github.com/MarekPikula/chipyard-ara-wrapper
+[firemarshal-repo]: https://github.com/MarekPikula/FireMarshal
 
 > [!NOTE]
-> All repositories are available as submodules in `code` directory.
+> All repositories are available as submodules in the `code` directory.
 
 ## Benchmarks
 

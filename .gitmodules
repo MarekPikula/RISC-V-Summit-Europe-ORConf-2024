@@ -4,3 +4,24 @@
 [submodule "benchmarks/rvv-bench"]
 	path = benchmarks/rvv-bench
 	url = https://github.com/MarekPikula/rvv-bench
+
+[submodule "code/chipyard"]
+	path = code/chipyard
+	url = https://github.com/MarekPikula/chipyard
+	update = none
+[submodule "code/firesim"]
+	path = code/firesim
+	url = https://github.com/MarekPikula/firesim
+	update = none
+[submodule "code/pulp-ara"]
+	path = code/pulp-ara
+	url = https://github.com/MarekPikula/pulp-ara
+	update = none
+[submodule "code/FireMarshal"]
+	path = code/FireMarshal
+	url = https://github.com/MarekPikula/FireMarshal
+	update = none
+[submodule "code/chipyard-ara-wrapper"]
+	path = code/chipyard-ara-wrapper
+	url = https://github.com/Samsung/chipyard-ara-wrapper.git
+	update = none
