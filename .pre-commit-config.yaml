@@ -17,6 +17,12 @@ repos:
       pass_filenames: false
       always_run: true
       language: system
+  - repo: https://github.com/rtts/djhtml
+    rev: "3.0.6"
+    hooks:
+      - id: djhtml
+        entry: djhtml --tabwidth 2
+      - id: djcss
   - repo: https://github.com/shssoichiro/oxipng
     rev: "v9.1.1"
     hooks:
