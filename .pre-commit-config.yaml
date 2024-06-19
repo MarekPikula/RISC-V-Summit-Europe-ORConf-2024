@@ -1,0 +1,29 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: "v4.6.0"
+    hooks:
+      - id: check-merge-conflict
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+  - repo: local
+    hooks:
+    - id: build
+      name: Generate GitHub page
+      description: This hook regenerates GitHub page.
+      entry: make
+      pass_filenames: false
+      always_run: true
+      language: system
+  - repo: https://github.com/shssoichiro/oxipng
+    rev: "v9.1.1"
+    hooks:
+      - id: oxipng
+        args: ["-o", "max", "--strip", "safe"]
+
+ci:
+  skip:
+    - build
+    - oxipng
