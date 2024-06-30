@@ -30,7 +30,7 @@ The following repositories were modified in process of this project:
 [chipyard-repo]: https://github.com/MarekPikula/chipyard/tree/ara-integration
 [firesim-repo]: https://github.com/MarekPikula/firesim/tree/ara-integration
 [ara-repo]: https://github.com/MarekPikula/pulp-ara/tree/chipyard-integration
-[ara-wrapper-repo]: https://github.com/MarekPikula/chipyard-ara-wrapper
+[ara-wrapper-repo]: https://github.com/Samsung/chipyard-ara-wrapper
 [firemarshal-repo]: https://github.com/MarekPikula/FireMarshal
 
 > [!NOTE]
