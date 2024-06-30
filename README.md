@@ -12,10 +12,13 @@ On this website you can find all resources for my poster submission for *RISC-V 
 - [Extended abstract][abstract] ([PDF version][abstract-pdf])
 - [Poster (PDF)][poster-pdf]
 
+You can read my RISC-V Summit Europe 2024 summary with some more information about this project on my [blog].
+
 [here]: https://github.com/MarekPikula/RISC-V-Summit-Europe-2024
 [abstract]: abstract/index.html
 [abstract-pdf]: abstract/abstract.pdf
 [poster-pdf]: poster/poster.pdf
+[blog]: https://serenitycode.dev/post/2024/06/riscv-summit-europe
 
 ## Code
 
