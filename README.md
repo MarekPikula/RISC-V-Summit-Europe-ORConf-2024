@@ -6,11 +6,12 @@
 
 ## Resources
 
-On this website you can find all resources for my poster submission for *RISC-V Summit Europe 2024*:
+On this website you can find all resources for my poster submission for [*RISC-V Summit Europe 2024*](https://riscv-europe.org/summit/2024/) and [*ORConf 2024*](https://fossi-foundation.org/orconf/2024):
 
 - [GitHub repository with all resources][here]
 - [Extended abstract][abstract] ([PDF version][abstract-pdf])
 - [Poster (PDF)][poster-pdf]
+- [Presentation (PDF)][presentation]
 
 You can read my RISC-V Summit Europe 2024 summary with some more information about this project on my [blog].
 
@@ -18,6 +19,7 @@ You can read my RISC-V Summit Europe 2024 summary with some more information abo
 [abstract]: abstract/index.html
 [abstract-pdf]: abstract/abstract.pdf
 [poster-pdf]: poster/poster.pdf
+[presentation]: presentation/2024-09-14-orconf-presentation.pdf
 [blog]: https://serenitycode.dev/post/2024/06/riscv-summit-europe
 
 ## Code
