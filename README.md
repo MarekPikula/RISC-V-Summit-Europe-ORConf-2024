@@ -11,8 +11,8 @@ On this website you can find all resources for my poster submission for [*RISC-V
 - [GitHub repository with all resources][here]
 - [Extended abstract][abstract] ([PDF version][abstract-pdf])
 - [Poster (PDF)][poster-pdf]
-- [Presentation (main talk)][presentation]
-- [Presentation (lightning talk)][presentation-lightning] (title: *CI setup for multi-platform software project*)
+- [ORConf 2024 main talk][presentation-video] ([slides][presentation])
+- [ORConf 2024 lightning talk][lightning-video] ([slides][lightning], title: *CI setup for multi-platform software project*)
 
 You can read my RISC-V Summit Europe 2024 summary with some more information about this project on my [blog].
 
@@ -21,7 +21,9 @@ You can read my RISC-V Summit Europe 2024 summary with some more information abo
 [abstract-pdf]: abstract/abstract.pdf
 [poster-pdf]: poster/poster.pdf
 [presentation]: presentation/2024-09-14-orconf-presentation.pdf
-[presentation-lightning]: presentation/2024-09-14-orconf-lightning-talk.pdf
+[presentation-video]: https://youtu.be/04YZcZ8E_jg
+[lightning]: presentation/2024-09-14-orconf-lightning-talk.pdf
+[lightning-video]: https://youtu.be/Xm_kUVhMBdw?t=766
 [blog]: https://serenitycode.dev/post/2024/06/riscv-summit-europe
 
 ## Code
